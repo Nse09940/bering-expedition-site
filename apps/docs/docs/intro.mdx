@@ -1,0 +1,32 @@
+---
+sidebar_position: 1
+slug: /intro
+---
+
+# Введение
+
+Это техническая документация проекта `Bering Expedition Site`.
+
+## Что документируется
+
+- архитектура монорепозитория;
+- API на `FastAPI`;
+- контентная модель;
+- правила хранения и привязки источников;
+- локальный запуск сервисов.
+
+## Приложения монорепозитория
+
+- `apps/web` — публичный сайт на `Next.js`;
+- `apps/backend` — REST API на `FastAPI + SQLAlchemy`;
+- `apps/docs` — документация на `Docusaurus`.
+
+## Быстрый запуск
+
+Run the development server:
+
+```bash
+pnpm dev:docs
+```
+
+Для API-документации backend-а используется стандартный OpenAPI UI по адресу `http://localhost:8000/docs`.
