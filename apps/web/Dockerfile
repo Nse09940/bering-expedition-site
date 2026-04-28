@@ -9,7 +9,8 @@ COPY apps/web/package.json apps/web/package.json
 RUN pnpm install
 
 COPY . .
+RUN pnpm --filter web build
 
 EXPOSE 3000
 
-CMD ["pnpm", "--filter", "web", "dev", "--hostname", "0.0.0.0"]
+CMD ["pnpm", "--filter", "web", "start", "--hostname", "0.0.0.0", "--port", "3000"]

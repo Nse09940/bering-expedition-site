@@ -1,6 +1,8 @@
 services:
   traefik:
     image: traefik:v3.1
+    environment:
+      DOCKER_API_VERSION: "1.43"
     command:
       - --providers.docker=true
       - --providers.docker.exposedbydefault=false
@@ -24,8 +26,6 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-bering}
       POSTGRES_USER: ${POSTGRES_USER:-bering}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-bering}
-    ports:
-      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
@@ -35,9 +35,6 @@ services:
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minio}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minio12345}
-    ports:
-      - "9000:9000"
-      - "9001:9001"
     volumes:
       - minio_data:/data
 
@@ -46,25 +43,24 @@ services:
       context: ./apps/backend
       dockerfile: Dockerfile
     env_file:
+      - path: .env
+        required: false
       - .env.example
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
-    volumes:
-      - ./apps/backend:/app
     depends_on:
       - postgres
     labels:
       - traefik.enable=true
-      - traefik.http.routers.backend-api.rule=Host(`history.dymnikov.tech`) && PathPrefix(`/api`)
+      - traefik.http.routers.backend-api.rule=Host(`${APP_DOMAIN:-history.dymnikov.tech}`) && PathPrefix(`/api`)
       - traefik.http.routers.backend-api.entrypoints=websecure
       - traefik.http.routers.backend-api.tls=true
       - traefik.http.routers.backend-api.tls.certresolver=le
       - traefik.http.routers.backend-api.priority=120
-      - traefik.http.routers.backend-docs.rule=Host(`history.dymnikov.tech`) && (PathPrefix(`/docs`) || PathPrefix(`/openapi.json`) || PathPrefix(`/redoc`))
+      - traefik.http.routers.backend-docs.rule=Host(`${APP_DOMAIN:-history.dymnikov.tech}`) && (PathPrefix(`/docs`) || PathPrefix(`/openapi.json`) || PathPrefix(`/redoc`))
       - traefik.http.routers.backend-docs.entrypoints=websecure
       - traefik.http.routers.backend-docs.tls=true
       - traefik.http.routers.backend-docs.tls.certresolver=le
       - traefik.http.routers.backend-docs.priority=120
-      - traefik.http.routers.backend-admin.rule=Host(`history.dymnikov.tech`) && PathPrefix(`/admin`)
+      - traefik.http.routers.backend-admin.rule=Host(`${APP_DOMAIN:-history.dymnikov.tech}`) && PathPrefix(`/admin`)
       - traefik.http.routers.backend-admin.entrypoints=websecure
       - traefik.http.routers.backend-admin.tls=true
       - traefik.http.routers.backend-admin.tls.certresolver=le
@@ -75,16 +71,15 @@ services:
     build:
       context: .
       dockerfile: apps/web/Dockerfile
-    environment:
-      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-https://history.dymnikov.tech/api}
-    command: pnpm --filter web dev --hostname 0.0.0.0
-    volumes:
-      - .:/app
+    env_file:
+      - path: .env
+        required: false
+      - .env.example
     depends_on:
       - backend
     labels:
       - traefik.enable=true
-      - traefik.http.routers.web.rule=Host(`history.dymnikov.tech`)
+      - traefik.http.routers.web.rule=Host(`${APP_DOMAIN:-history.dymnikov.tech}`)
       - traefik.http.routers.web.entrypoints=websecure
       - traefik.http.routers.web.tls=true
       - traefik.http.routers.web.tls.certresolver=le
