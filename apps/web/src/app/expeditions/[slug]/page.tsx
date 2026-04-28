@@ -6,11 +6,6 @@ type ExpeditionPageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export async function generateStaticParams() {
-  const { expeditions } = await fetchCatalogData();
-  return expeditions.map((expedition) => ({ slug: expedition.slug }));
-}
-
 export default async function ExpeditionPage({ params }: ExpeditionPageProps) {
   const { slug } = await params;
   const data = await fetchCatalogData();

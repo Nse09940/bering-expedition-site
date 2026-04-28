@@ -90,11 +90,15 @@ function getApiBaseUrl() {
 }
 
 export async function fetchCatalogData(): Promise<CatalogData> {
-  const response = await fetch(`${getApiBaseUrl()}/content`, {
-    cache: "no-store",
-  });
-  if (!response.ok) return FALLBACK_DATA;
-  return (await response.json()) as CatalogData;
+  try {
+    const response = await fetch(`${getApiBaseUrl()}/content`, {
+      cache: "no-store",
+    });
+    if (!response.ok) return FALLBACK_DATA;
+    return (await response.json()) as CatalogData;
+  } catch {
+    return FALLBACK_DATA;
+  }
 }
 
 export function getSourcesForEvent(data: CatalogData, event: RouteEvent) {
