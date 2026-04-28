@@ -43,7 +43,7 @@ export default function RootLayout({
               className="text-lg font-semibold text-[var(--foreground)]"
               href="/"
             >
-              Тихоокеанский трекер
+              Экспедиции Беринга
             </Link>
             <nav className="flex flex-wrap items-center justify-end gap-5 text-sm text-[var(--muted)]">
               {navItems.map(([label, href]) => (
@@ -61,7 +61,7 @@ export default function RootLayout({
         {children}
         <footer className="border-t border-black/5 py-8">
           <div className="container flex flex-col gap-2 text-sm text-[var(--muted)] md:flex-row md:justify-between">
-            <p>Экспедиции Витуса Беринга</p>
+            <p>Экспедиции Витуса Беринга · 2026</p>
             <p>
               Учебный проект студентов ИТМО по дисциплине «ИРС». Преподаватель:
               Богомазов Н. И.
