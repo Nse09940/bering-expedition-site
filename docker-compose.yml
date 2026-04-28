@@ -54,10 +54,21 @@ services:
       - postgres
     labels:
       - traefik.enable=true
-      - traefik.http.routers.backend.rule=Host(`history.dymnikov.tech`) && PathPrefix(`/api`)
-      - traefik.http.routers.backend.entrypoints=websecure
-      - traefik.http.routers.backend.tls=true
-      - traefik.http.routers.backend.tls.certresolver=le
+      - traefik.http.routers.backend-api.rule=Host(`history.dymnikov.tech`) && PathPrefix(`/api`)
+      - traefik.http.routers.backend-api.entrypoints=websecure
+      - traefik.http.routers.backend-api.tls=true
+      - traefik.http.routers.backend-api.tls.certresolver=le
+      - traefik.http.routers.backend-api.priority=120
+      - traefik.http.routers.backend-docs.rule=Host(`history.dymnikov.tech`) && (PathPrefix(`/docs`) || PathPrefix(`/openapi.json`) || PathPrefix(`/redoc`))
+      - traefik.http.routers.backend-docs.entrypoints=websecure
+      - traefik.http.routers.backend-docs.tls=true
+      - traefik.http.routers.backend-docs.tls.certresolver=le
+      - traefik.http.routers.backend-docs.priority=120
+      - traefik.http.routers.backend-admin.rule=Host(`history.dymnikov.tech`) && PathPrefix(`/admin`)
+      - traefik.http.routers.backend-admin.entrypoints=websecure
+      - traefik.http.routers.backend-admin.tls=true
+      - traefik.http.routers.backend-admin.tls.certresolver=le
+      - traefik.http.routers.backend-admin.priority=120
       - traefik.http.services.backend.loadbalancer.server.port=8000
 
   web:
@@ -77,6 +88,7 @@ services:
       - traefik.http.routers.web.entrypoints=websecure
       - traefik.http.routers.web.tls=true
       - traefik.http.routers.web.tls.certresolver=le
+      - traefik.http.routers.web.priority=10
       - traefik.http.services.web.loadbalancer.server.port=3000
 
 volumes:
