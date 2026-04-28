@@ -7,6 +7,7 @@ const sidebars: SidebarsConfig = {
     "api",
     "content-model",
     "content-guidelines",
+    "admin-guide",
   ],
 };
 
