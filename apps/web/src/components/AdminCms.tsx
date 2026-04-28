@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { events, expeditions, sources } from "@/data/bering";
 
 type DraftStatus = "draft" | "published";
 
@@ -14,32 +13,7 @@ type CmsItem = {
   updatedAt: string;
 };
 
-const initialItems: CmsItem[] = [
-  ...expeditions.map((item) => ({
-    id: item.slug,
-    entity: "Экспедиции",
-    title: item.title,
-    source: "Контентная модель проекта",
-    status: "published" as DraftStatus,
-    updatedAt: "2026-04-28",
-  })),
-  ...events.slice(0, 4).map((item) => ({
-    id: item.id,
-    entity: "События",
-    title: item.title,
-    source: item.sourceIds[0] ?? "",
-    status: "published" as DraftStatus,
-    updatedAt: "2026-04-28",
-  })),
-  ...sources.slice(0, 3).map((item) => ({
-    id: item.id,
-    entity: "Источники",
-    title: item.title,
-    source: item.archiveLink,
-    status: "published" as DraftStatus,
-    updatedAt: "2026-04-28",
-  })),
-];
+const initialItems: CmsItem[] = [];
 
 const entities = [
   "Экспедиции",

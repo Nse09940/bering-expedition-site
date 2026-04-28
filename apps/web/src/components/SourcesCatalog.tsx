@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { events, sources, type SourceType } from "@/data/bering";
+import type { CatalogData, SourceType } from "@/lib/catalog";
 
 const types: Array<SourceType | "Все"> = [
   "Все",
@@ -23,7 +23,8 @@ const archiveOptions = [
   "litres.ru",
 ];
 
-export function SourcesCatalog() {
+export function SourcesCatalog({ data }: { data: CatalogData }) {
+  const { events, sources } = data;
   const [query, setQuery] = useState("");
   const [type, setType] = useState<SourceType | "Все">("Все");
   const [year, setYear] = useState("Все");

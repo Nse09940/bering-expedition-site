@@ -11,12 +11,11 @@ import {
 } from "react-leaflet";
 import type { LatLngTuple, Map as LeafletMap } from "leaflet";
 import {
-  events,
   getSourcesForEvent,
-  stages,
+  type CatalogData,
   type EventType,
   type ExpeditionId,
-} from "@/data/bering";
+} from "@/lib/catalog";
 
 const eventTypes: EventType[] = [
   "переход",
@@ -172,7 +171,13 @@ function RecenterMiniMap({ center }: { center: LatLngTuple }) {
   return null;
 }
 
-function EventMiniMap({ event }: { event: (typeof events)[number] }) {
+function EventMiniMap({
+  event,
+  stages,
+}: {
+  event: CatalogData["events"][number];
+  stages: CatalogData["stages"];
+}) {
   const stage = stages.find((item) => item.id === event.stageId);
   const center = toLatLng(event.coords);
 
@@ -223,10 +228,13 @@ function EventMiniMap({ event }: { event: (typeof events)[number] }) {
 }
 
 export function LeafletMapContent({
+  data,
   initialSelectedId,
 }: {
+  data: CatalogData;
   initialSelectedId?: string;
 }) {
+  const { events, stages } = data;
   const [expedition, setExpedition] = useState<ExpeditionId | "all">("all");
   const [stageId, setStageId] = useState("all");
   const [type, setType] = useState<EventType | "all">("all");
@@ -600,7 +608,11 @@ export function LeafletMapContent({
                 onClick={() => setIsEventMapOpen(true)}
                 type="button"
               >
-                <EventMiniMap event={selectedEvent} key={selectedEvent.id} />
+                <EventMiniMap
+                  event={selectedEvent}
+                  key={selectedEvent.id}
+                  stages={stages}
+                />
               </button>
               <figcaption className="border-t border-black/10 px-4 py-3 text-xs text-[var(--muted)]">
                 {selectedEvent.image} · Нажмите, чтобы открыть интерактивную
@@ -620,7 +632,7 @@ export function LeafletMapContent({
             </div>
           </div>
           <div className="mt-5 flex flex-wrap gap-2">
-            {getSourcesForEvent(selectedEvent).map((source) => (
+            {getSourcesForEvent(data, selectedEvent).map((source) => (
               <a
                 className="rounded-full bg-[var(--accent-soft)] px-3 py-2 text-sm text-[var(--accent)]"
                 href={`/sources#source-${source.id}`}

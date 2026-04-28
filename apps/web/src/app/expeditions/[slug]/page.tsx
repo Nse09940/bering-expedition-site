@@ -1,32 +1,29 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import {
-  events,
-  expeditions,
-  getExpeditionBySlug,
-  stages,
-} from "@/data/bering";
+import { fetchCatalogData, getExpeditionBySlug } from "@/lib/catalog";
 
 type ExpeditionPageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const { expeditions } = await fetchCatalogData();
   return expeditions.map((expedition) => ({ slug: expedition.slug }));
 }
 
 export default async function ExpeditionPage({ params }: ExpeditionPageProps) {
   const { slug } = await params;
-  const expedition = getExpeditionBySlug(slug);
+  const data = await fetchCatalogData();
+  const expedition = getExpeditionBySlug(data, slug);
 
   if (!expedition) {
     notFound();
   }
 
-  const expeditionStages = stages.filter(
+  const expeditionStages = data.stages.filter(
     (stage) => stage.expeditionId === expedition.id,
   );
-  const expeditionEvents = events.filter(
+  const expeditionEvents = data.events.filter(
     (event) => event.expeditionId === expedition.id,
   );
 

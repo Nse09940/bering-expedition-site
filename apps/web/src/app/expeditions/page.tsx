@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { expeditions } from "@/data/bering";
+import { fetchCatalogData } from "@/lib/catalog";
 
-export default function ExpeditionsPage() {
+export default async function ExpeditionsPage() {
+  const { expeditions } = await fetchCatalogData();
   return (
     <main className="container page-shell flex-1">
       <div className="page-hero">

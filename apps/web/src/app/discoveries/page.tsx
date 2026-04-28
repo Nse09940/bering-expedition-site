@@ -1,4 +1,4 @@
-import { events } from "@/data/bering";
+import { fetchCatalogData } from "@/lib/catalog";
 
 const resultCards = [
   ["География", "Берега, проливы и острова северной Пацифики стали понятнее."],
@@ -7,7 +7,8 @@ const resultCards = [
   ["Освоение", "Маршруты подготовили дальнейшее движение к Алеутам и Аляске."],
 ];
 
-export default function DiscoveriesPage() {
+export default async function DiscoveriesPage() {
+  const { events } = await fetchCatalogData();
   const discoveryEvents = events.filter((event) => event.type === "открытие");
 
   return (

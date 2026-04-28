@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { expeditions } from "@/data/bering";
+import { fetchCatalogData } from "@/lib/catalog";
 
 const introCards = [
   [
@@ -16,7 +16,8 @@ const introCards = [
   ],
 ];
 
-export default function Home() {
+export default async function Home() {
+  const { expeditions } = await fetchCatalogData();
   return (
     <main className="flex-1">
       <section className="container grid min-h-[calc(100vh-73px)] place-items-center py-14 text-center">

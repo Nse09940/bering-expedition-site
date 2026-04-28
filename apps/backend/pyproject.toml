@@ -28,7 +28,7 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-packages = ["app", "app.api", "app.core", "app.db", "app.models", "app.schemas"]
+packages = ["app", "app.api", "app.core", "app.db", "app.models", "app.schemas", "app.scripts"]
 
 [tool.black]
 line-length = 88

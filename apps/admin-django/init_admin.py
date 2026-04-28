@@ -6,6 +6,10 @@ from django.contrib.auth import get_user_model
 
 def run() -> None:
     django.setup()
+    from content.seed import seed_content
+
+    seed_content()
+    print("Content seed completed")
 
     username = os.getenv("DJANGO_SUPERUSER_USERNAME", "").strip()
     password = os.getenv("DJANGO_SUPERUSER_PASSWORD", "").strip()

@@ -1,10 +1,12 @@
 import { InteractiveMap } from "@/components/InteractiveMap";
+import { fetchCatalogData } from "@/lib/catalog";
 
-export default function MapPage({
+export default async function MapPage({
   searchParams,
 }: {
   searchParams?: { event?: string };
 }) {
+  const data = await fetchCatalogData();
   return (
     <main className="container flex-1 py-8">
       <div className="mb-6 grid gap-2">
@@ -13,7 +15,7 @@ export default function MapPage({
           Интерактивная карта
         </h1>
       </div>
-      <InteractiveMap initialSelectedId={searchParams?.event} />
+      <InteractiveMap data={data} initialSelectedId={searchParams?.event} />
     </main>
   );
 }
