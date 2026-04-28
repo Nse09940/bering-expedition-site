@@ -10,6 +10,12 @@
 - Запуск через Docker: `docker-compose.yml`
 - Данные карты и событий: `apps/web/src/data/bering.ts`
 
+## Прод-ссылки
+
+- Сайт: [https://history.dymnikov.tech](https://history.dymnikov.tech)
+- Админка: [https://history.dymnikov.tech/admin](https://history.dymnikov.tech/admin)
+- Документация API: [https://history.dymnikov.tech/docs](https://history.dymnikov.tech/docs)
+
 ## Быстрый старт
 
 ```bash
