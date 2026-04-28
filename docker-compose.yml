@@ -57,17 +57,45 @@ services:
       - traefik.http.routers.backend-api.tls=true
       - traefik.http.routers.backend-api.tls.certresolver=le
       - traefik.http.routers.backend-api.priority=120
-      - traefik.http.routers.backend-docs.rule=Host(`${APP_DOMAIN:-history.dymnikov.tech}`) && (PathPrefix(`/docs`) || PathPrefix(`/openapi.json`) || PathPrefix(`/redoc`))
-      - traefik.http.routers.backend-docs.entrypoints=websecure
-      - traefik.http.routers.backend-docs.tls=true
-      - traefik.http.routers.backend-docs.tls.certresolver=le
-      - traefik.http.routers.backend-docs.priority=120
-      - traefik.http.routers.backend-admin.rule=Host(`${APP_DOMAIN:-history.dymnikov.tech}`) && PathPrefix(`/admin`)
-      - traefik.http.routers.backend-admin.entrypoints=websecure
-      - traefik.http.routers.backend-admin.tls=true
-      - traefik.http.routers.backend-admin.tls.certresolver=le
-      - traefik.http.routers.backend-admin.priority=120
       - traefik.http.services.backend.loadbalancer.server.port=8000
+
+  django-admin:
+    build:
+      context: ./apps/admin-django
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - path: .env
+        required: false
+      - .env.example
+    volumes:
+      - django_admin_data:/data
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.django-admin.rule=Host(`${APP_DOMAIN:-history.dymnikov.tech}`) && PathPrefix(`/admin`)
+      - traefik.http.routers.django-admin.entrypoints=websecure
+      - traefik.http.routers.django-admin.tls=true
+      - traefik.http.routers.django-admin.tls.certresolver=le
+      - traefik.http.routers.django-admin.priority=125
+      - traefik.http.services.django-admin.loadbalancer.server.port=8010
+
+  docs:
+    build:
+      context: .
+      dockerfile: apps/docs/Dockerfile
+    restart: always
+    env_file:
+      - path: .env
+        required: false
+      - .env.example
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.docs.rule=Host(`${APP_DOMAIN:-history.dymnikov.tech}`) && PathPrefix(`/docs`)
+      - traefik.http.routers.docs.entrypoints=websecure
+      - traefik.http.routers.docs.tls=true
+      - traefik.http.routers.docs.tls.certresolver=le
+      - traefik.http.routers.docs.priority=130
+      - traefik.http.services.docs.loadbalancer.server.port=3001
 
   web:
     build:
@@ -80,6 +108,8 @@ services:
       - .env.example
     depends_on:
       - backend
+      - django-admin
+      - docs
     labels:
       - traefik.enable=true
       - traefik.http.routers.web.rule=Host(`${APP_DOMAIN:-history.dymnikov.tech}`)
@@ -93,3 +123,4 @@ volumes:
   postgres_data:
   minio_data:
   traefik_letsencrypt:
+  django_admin_data:

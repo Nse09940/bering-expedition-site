@@ -11,8 +11,8 @@ const config: Config = {
     v4: true,
   },
 
-  url: "http://localhost",
-  baseUrl: "/",
+  url: "https://history.dymnikov.tech",
+  baseUrl: "/docs/",
   organizationName: "miald",
   projectName: "bering-expedition-site",
 
@@ -28,7 +28,7 @@ const config: Config = {
       {
         docs: {
           sidebarPath: "./sidebars.ts",
-          routeBasePath: "docs",
+          routeBasePath: "/",
         },
         blog: false,
         theme: {
@@ -57,12 +57,12 @@ const config: Config = {
           label: "Документация",
         },
         {
-          href: "http://localhost:3000",
+          href: "https://history.dymnikov.tech",
           label: "Сайт",
           position: "right",
         },
         {
-          href: "http://localhost:8000/docs",
+          href: "https://history.dymnikov.tech/api/docs",
           label: "API",
           position: "right",
         },
@@ -76,11 +76,11 @@ const config: Config = {
           items: [
             {
               label: "Введение",
-              to: "/docs/intro",
+              to: "/intro",
             },
             {
               label: "Архитектура",
-              to: "/docs/architecture",
+              to: "/architecture",
             },
           ],
         },
@@ -89,11 +89,11 @@ const config: Config = {
           items: [
             {
               label: "Публичный сайт",
-              href: "http://localhost:3000",
+              href: "https://history.dymnikov.tech",
             },
             {
               label: "FastAPI docs",
-              href: "http://localhost:8000/docs",
+              href: "https://history.dymnikov.tech/api/docs",
             },
           ],
         },
@@ -102,11 +102,11 @@ const config: Config = {
           items: [
             {
               label: "Контентная модель",
-              to: "/docs/content-model",
+              to: "/content-model",
             },
             {
               label: "Правила контента",
-              to: "/docs/content-guidelines",
+              to: "/content-guidelines",
             },
           ],
         },

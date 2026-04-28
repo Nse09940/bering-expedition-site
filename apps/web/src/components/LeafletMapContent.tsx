@@ -222,13 +222,19 @@ function EventMiniMap({ event }: { event: (typeof events)[number] }) {
   );
 }
 
-export function LeafletMapContent() {
+export function LeafletMapContent({
+  initialSelectedId,
+}: {
+  initialSelectedId?: string;
+}) {
   const [expedition, setExpedition] = useState<ExpeditionId | "all">("all");
   const [stageId, setStageId] = useState("all");
   const [type, setType] = useState<EventType | "all">("all");
   const [year, setYear] = useState(1741);
   const [query, setQuery] = useState("");
-  const [selectedId, setSelectedId] = useState("alaska-coast");
+  const [selectedId, setSelectedId] = useState(
+    initialSelectedId ?? "alaska-coast",
+  );
   const [playing, setPlaying] = useState(false);
   const [playProgress, setPlayProgress] = useState(1);
   const [isEventMapOpen, setIsEventMapOpen] = useState(false);

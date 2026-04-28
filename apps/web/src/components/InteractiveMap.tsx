@@ -15,6 +15,10 @@ const LeafletMapContent = dynamic(
   },
 );
 
-export function InteractiveMap() {
-  return <LeafletMapContent />;
+export function InteractiveMap({
+  initialSelectedId,
+}: {
+  initialSelectedId?: string;
+}) {
+  return <LeafletMapContent initialSelectedId={initialSelectedId} />;
 }

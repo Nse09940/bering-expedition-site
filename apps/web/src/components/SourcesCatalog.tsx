@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import { events, sources, type SourceType } from "@/data/bering";
 
 const types: Array<SourceType | "Все"> = [
@@ -14,11 +15,12 @@ const types: Array<SourceType | "Все"> = [
 
 const archiveOptions = [
   "Все",
-  "prlib.ru",
-  "loc.gov",
-  "rgavmf.ru",
-  "davidrumsey.com",
-  "scholar.google.com",
+  "e-heritage.ru",
+  "runivers.ru",
+  "elibrary.ru",
+  "cyberleninka.ru",
+  "books.google.com",
+  "litres.ru",
 ];
 
 export function SourcesCatalog() {
@@ -165,10 +167,23 @@ export function SourcesCatalog() {
               </a>
               <div className="mt-4 border-t border-black/10 pt-4">
                 <p className="text-sm font-semibold">Связанные события</p>
-                <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
-                  {linkedEvents.map((event) => event.title).join(", ") ||
-                    "Пока не привязан"}
-                </p>
+                {linkedEvents.length === 0 ? (
+                  <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
+                    Пока не привязан
+                  </p>
+                ) : (
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {linkedEvents.map((event) => (
+                      <Link
+                        className="rounded-full bg-[var(--accent-soft)] px-3 py-1.5 text-xs font-semibold text-[var(--accent)]"
+                        href={`/map?event=${event.id}`}
+                        key={event.id}
+                      >
+                        {event.title}
+                      </Link>
+                    ))}
+                  </div>
+                )}
               </div>
             </article>
           );

@@ -1,6 +1,10 @@
 import { InteractiveMap } from "@/components/InteractiveMap";
 
-export default function MapPage() {
+export default function MapPage({
+  searchParams,
+}: {
+  searchParams?: { event?: string };
+}) {
   return (
     <main className="container flex-1 py-8">
       <div className="mb-6 grid gap-2">
@@ -9,7 +13,7 @@ export default function MapPage() {
           Интерактивная карта
         </h1>
       </div>
-      <InteractiveMap />
+      <InteractiveMap initialSelectedId={searchParams?.event} />
     </main>
   );
 }

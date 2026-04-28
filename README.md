@@ -14,7 +14,8 @@
 
 - Сайт: [https://history.dymnikov.tech](https://history.dymnikov.tech)
 - Админка: [https://history.dymnikov.tech/admin](https://history.dymnikov.tech/admin)
-- Документация API: [https://history.dymnikov.tech/docs](https://history.dymnikov.tech/docs)
+- Документация проекта (Docusaurus): [https://history.dymnikov.tech/docs](https://history.dymnikov.tech/docs)
+- Swagger API: [https://history.dymnikov.tech/api/docs](https://history.dymnikov.tech/api/docs)
 
 ## Быстрый старт
 
