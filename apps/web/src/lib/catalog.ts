@@ -27,6 +27,7 @@ export type Source = {
 };
 
 export type RoutePoint = {
+  name?: string;
   x: number;
   y: number;
 };
@@ -86,7 +87,11 @@ function getApiBaseUrl() {
   if (typeof window !== "undefined") {
     return process.env.NEXT_PUBLIC_API_URL ?? "/api";
   }
-  return process.env.NEXT_PUBLIC_API_URL ?? "http://backend:8000/api";
+  return (
+    process.env.INTERNAL_API_URL ??
+    process.env.NEXT_PUBLIC_API_URL ??
+    "http://backend:8000/api"
+  );
 }
 
 export async function fetchCatalogData(): Promise<CatalogData> {

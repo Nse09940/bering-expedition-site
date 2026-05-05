@@ -15,12 +15,10 @@ const types: Array<SourceType | "Все"> = [
 
 const archiveOptions = [
   "Все",
-  "e-heritage.ru",
-  "runivers.ru",
-  "elibrary.ru",
-  "cyberleninka.ru",
-  "books.google.com",
-  "litres.ru",
+  "prlib.ru",
+  "elib.rgo.ru",
+  "docs.historyrussia.org",
+  "openlibrary.org",
 ];
 
 export function SourcesCatalog({ data }: { data: CatalogData }) {

@@ -17,6 +17,7 @@ const geistMono = Geist_Mono({
 const navItems = [
   ["Карта", "/map"],
   ["Экспедиции", "/expeditions"],
+  ["Викторина", "/quiz"],
   ["Источники", "/sources"],
   ["О проекте", "/about"],
 ];
